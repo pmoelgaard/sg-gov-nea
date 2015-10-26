@@ -64,6 +64,22 @@ var sg;
                                     return result;
                                 });
                                 break;
+                            case DataSet.NOWCAST:
+                                result = {
+                                    datentime: result.channel.item.issue_datentime,
+                                    forecasts: _.map(result.channel.item.weatherForecast.area, function (forecast) {
+                                        var result = {
+                                            name: _.get(forecast, 'name'),
+                                            forecast: _.trim(_.get(forecast, 'forecast').toString()),
+                                            icon: _.get(forecast, 'icon'),
+                                            zone: _.get(forecast, 'zone'),
+                                            latitude: parseFloat(_.get(forecast, 'lat').toString()),
+                                            longitude: parseFloat(_.get(forecast, 'lon').toString())
+                                        };
+                                        return result;
+                                    })
+                                };
+                                break;
                             default:
                                 // ignore for now
                                 break;
@@ -72,6 +88,7 @@ var sg;
                     });
                 };
                 DataSet.PSI_UPDATE = 'psi_update';
+                DataSet.NOWCAST = 'nowcast';
                 return DataSet;
             })();
             nea.DataSet = DataSet;

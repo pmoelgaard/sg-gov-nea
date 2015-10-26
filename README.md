@@ -12,24 +12,32 @@ This is an attempt to make an easy to use NodeJS implementation for the Singapor
 
 ## Todo / Disclaimer
 
-Currently the library only has support for a single dataset (PSI Update), however next the remaining dataset will be added, they just need a basic parser function for each to transform the response before sending it down the event chain.
+Currently the library only has support for a few dataset (PSI-Update, Now-Cast), however next the remaining dataset will be added, they just need a basic parser function for each to transform the response before sending it down the event chain.
 
 ---
 
 ## Sample Usage
 
-##### Code
+#### Code
 
 	var API = require('../sg-gov-nea/');
 	var lib = require('../sg-gov-nea/sg-gov-nea.js');
 
 	var api = new API(new lib.sg.gov.nea.APIConfig({key: '[insert_your_own_API_key]'}));
+	
 	var dataSet = api.connect(lib.sg.gov.nea.DataSet.PSI_UPDATE);
 	dataSet.on(lib.sg.gov.nea.APIEvent.DATA, function (data) {
 	    console.log(data);
 	})
+	
+	var dataSet = api.connect(lib.sg.gov.nea.DataSet.NOWCAST);
+	dataSet.on(lib.sg.gov.nea.APIEvent.DATA, function (data) {
+	    console.log(data);
+	})
 
-##### Response
+#### Response
+
+###### PSI Update
 
 	[
 	  {
@@ -54,9 +62,38 @@ Currently the library only has support for a single dataset (PSI Update), howeve
 	    }
 	  },
 	  {
-	    ...
+	   	...
 	  }
 	]
+	
+###### Now Cast
+*Note: This is pretty ugly from the source, so have to find a way to further beautify it.*
+
+	{
+	  datentime: 'FROM 1:00 PM TO 4:00 PM 26-10-2015&lt;br&gt;&lt;font size=1&gt;Updated at 02:00 PM on 26-10-2015',
+	  forecasts: [
+	    {
+	      name: 'ANG MO KIO',
+	      forecast: 'Hazy',
+	      icon: 'HA',
+	      zone: 'C',
+	      latitude: 1.37,
+	      longitude: 103.8494
+	    },
+	    {
+	      name: 'BEDOK',
+	      forecast: 'Hazy',
+	      icon: 'HA',
+	      zone: 'E',
+	      latitude: 1.3240383,
+	      longitude: 103.9200356
+	    }
+	    ,
+	    {
+	    	...
+	    }
+	  ]
+	}
 	
 ### Dataset Documentation
 can be found on the NEA's website:

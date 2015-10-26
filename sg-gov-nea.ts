@@ -69,6 +69,7 @@ export module sg.gov.nea {
                 }
 
                 switch (context.name) {
+
                     case DataSet.PSI_UPDATE:
                         result = _.map(result.channel.item.region, function(region:any) : any {
                             var result:any = {
@@ -84,6 +85,24 @@ export module sg.gov.nea {
                             return result;
                         })
                         break;
+
+                    case DataSet.NOWCAST:
+                        result = {
+                            datentime: result.channel.item.issue_datentime,
+                            forecasts: _.map(result.channel.item.weatherForecast.area, function(forecast:any) : any {
+                                var result:any = {
+                                    name: _.get(forecast, 'name'),
+                                    forecast: _.trim(_.get(forecast, 'forecast').toString()),
+                                    icon: _.get(forecast, 'icon'),
+                                    zone: _.get(forecast, 'zone'),
+                                    latitude: parseFloat(_.get(forecast, 'lat').toString()),
+                                    longitude: parseFloat(_.get(forecast, 'lon').toString()),
+                                };
+                                return result;
+                            })
+                        }
+                        break;
+
                     default:
                         // ignore for now
                         break;
@@ -95,6 +114,7 @@ export module sg.gov.nea {
         }
 
         static PSI_UPDATE:string = 'psi_update'
+        static NOWCAST:string = 'nowcast'
     }
 
     export class DataSetTransport {
