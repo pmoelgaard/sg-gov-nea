@@ -33,19 +33,19 @@ This is an attempt to make an easy to use NodeJS implementation for the Singapor
 	    longitude: 103.82,
 	    timestamp: 20151026130000,
 	    readings: {
-	      NPSI: 144,
-	      NPSI_PM25_3HR: 171,
-	      NO2_1HR_MAX: 33,
-	      PM10_24HR: 126,
-	      PM25_24HR: 96,
-	      SO2_24HR: 6,
-	      CO_8HR_MAX: 1.97,
-	      O3_8HR_MAX: 32,
-	      NPSI_CO: 20,
-	      NPSI_O3: 13,
-	      NPSI_PM10: 88,
-	      NPSI_PM25: 144,
-	      NPSI_SO2: 4
+	      npsi: 144,
+	      npsi_pm25_3hr: 171,
+	      no2_1hr_max: 33,
+	      pm10_24hr: 126,
+	      pm25_24hr: 96,
+	      so2_24hr: 6,
+	      co_8hr_max: 1.97,
+	      o3_8hr_max: 32,
+	      npsi_co: 20,
+	      npsi_o3: 13,
+	      npsi_pm10: 88,
+	      npsi_pm25: 144,
+	      npsi_so2: 4
 	    }
 	  },
 	  {
