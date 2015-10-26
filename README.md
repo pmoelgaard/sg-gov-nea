@@ -1,7 +1,7 @@
 # SG-GOV-NEA
 ## NodeJS Library to access the Singaporean Government National Environment Agency's Dataset Web API
 
-*This library is still HIGHLY EXPERIMENTAL, use at your own discretion, the author takes no responsibility until futher works have been completed.*
+*This library is still HIGHLY EXPERIMENTAL, use at your own discretion, the author takes no responsibility until further works has been done.*
 
 ---
 
