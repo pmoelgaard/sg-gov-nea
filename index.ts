@@ -1,7 +1,6 @@
 /// <reference path='typings/tsd.d.ts' />
 /// <reference path='sg-gov-nea.ts' />
 
-import path = require('path');
 import api = require('../sg-gov-nea/sg-gov-nea.js');
 
 import IAPIConfig = api.sg.gov.nea.IAPIConfig;
@@ -11,7 +10,7 @@ import APIConfig = api.sg.gov.nea.APIConfig;
 
 class API {
 
-    constructor(public config:IAPIConfig=new APIConfig()) {
+    constructor(public config:IAPIConfig) {
     }
 
     public connect(dataset:string) : IDataSet {

@@ -1,19 +1,29 @@
 /// <reference path='typings/tsd.d.ts' />
 
-import {Parser} from "xml2js";
+import _ = require('lodash');
 
 export module sg.gov.nea {
 
     import EventEmitter = NodeJS.EventEmitter;
 
     export interface IAPIConfig {
-        key:string;
-        baseUrl:string;
+        key?:string;
+        baseUrl?:string;
     }
 
     export class APIConfig implements IAPIConfig {
-        public key:string = '781CF461BB6606AD28A78E343E0E4176B76D27C9922DDDB4';
-        public baseUrl:string = 'http://www.nea.gov.sg/api/WebAPI';
+
+        public key:string;
+        public baseUrl:string;
+
+        constructor(config:IAPIConfig) {
+            _.extend(this, config);
+        }
+
+        static defaults:IAPIConfig = {
+            key: '[insert_your_own_API_key]',
+            baseUrl: 'http://www.nea.gov.sg/api/WebAPI'
+        }
     }
 
     export class APIEvent {
@@ -31,6 +41,9 @@ export module sg.gov.nea {
         private emitter:EventEmitter;
 
         constructor(public name:string, private config:IAPIConfig) {
+
+            this.config = _.extend({}, APIConfig.defaults, config);
+
             var events = require('events');
             this.emitter = new events.EventEmitter();
             this.refresh();
@@ -50,14 +63,26 @@ export module sg.gov.nea {
             var transport:DataSetTransport = new DataSetTransport(this.config.baseUrl + '?dataset=' + this.name + '&keyref=' + this.config.key);
             transport.fetch(function (err:Error, result:any):void {
 
-                if(err) {
+                if (err) {
                     context.emitter.emit(APIEvent.ERROR, err);
                     return;
                 }
 
                 switch (context.name) {
                     case DataSet.PSI_UPDATE:
-                        result = result.channel.item[0].region;
+                        result = _.map(result.channel.item.region, function(region:any) : any {
+                            var result:any = {
+                                region: region.id,
+                                latitude: parseFloat(region.latitude),
+                                longitude: parseFloat(region.longitude),
+                                timestamp: parseInt(region.record.timestamp),
+                                readings: {}
+                            };
+                            _.each(region.record.reading, function(reading:any) : any {
+                                _.set(result.readings, reading.type, parseFloat(reading.value));
+                            })
+                            return result;
+                        })
                         break;
                     default:
                         // ignore for now
@@ -82,12 +107,15 @@ export module sg.gov.nea {
             var request = require('request');
             request(this.url, function (err:Error, response:any, body:string):void {
 
-                var xml2js = require('xml2js');
-                var parser:Parser = new xml2js.Parser();
+                if (err) {
+                    return callback(err);
+                }
 
-                parser.parseString(body, function (err:Error, result:any):void {
-                    callback(err, result);
-                });
+                var parser = require('xml2json');
+                var result = parser.toJson(body);
+                result = JSON.parse(result);
+
+                callback(null, result);
             })
         }
 

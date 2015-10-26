@@ -1,4 +1,5 @@
 /// <reference path='typings/tsd.d.ts' />
+var _ = require('lodash');
 var sg;
 (function (sg) {
     var gov;
@@ -6,10 +7,13 @@ var sg;
         var nea;
         (function (nea) {
             var APIConfig = (function () {
-                function APIConfig() {
-                    this.key = '781CF461BB6606AD28A78E343E0E4176B76D27C9922DDDB4';
-                    this.baseUrl = 'http://www.nea.gov.sg/api/WebAPI';
+                function APIConfig(config) {
+                    _.extend(this, config);
                 }
+                APIConfig.defaults = {
+                    key: '[insert_your_own_API_key]',
+                    baseUrl: 'http://www.nea.gov.sg/api/WebAPI'
+                };
                 return APIConfig;
             })();
             nea.APIConfig = APIConfig;
@@ -25,6 +29,7 @@ var sg;
                 function DataSet(name, config) {
                     this.name = name;
                     this.config = config;
+                    this.config = _.extend({}, APIConfig.defaults, config);
                     var events = require('events');
                     this.emitter = new events.EventEmitter();
                     this.refresh();
@@ -45,7 +50,19 @@ var sg;
                         }
                         switch (context.name) {
                             case DataSet.PSI_UPDATE:
-                                result = result.channel.item[0].region;
+                                result = _.map(result.channel.item.region, function (region) {
+                                    var result = {
+                                        region: region.id,
+                                        latitude: parseFloat(region.latitude),
+                                        longitude: parseFloat(region.longitude),
+                                        timestamp: parseInt(region.record.timestamp),
+                                        readings: {}
+                                    };
+                                    _.each(region.record.reading, function (reading) {
+                                        _.set(result.readings, reading.type, parseFloat(reading.value));
+                                    });
+                                    return result;
+                                });
                                 break;
                             default:
                                 // ignore for now
@@ -65,11 +82,13 @@ var sg;
                 DataSetTransport.prototype.fetch = function (callback) {
                     var request = require('request');
                     request(this.url, function (err, response, body) {
-                        var xml2js = require('xml2js');
-                        var parser = new xml2js.Parser();
-                        parser.parseString(body, function (err, result) {
-                            callback(err, result);
-                        });
+                        if (err) {
+                            return callback(err);
+                        }
+                        var parser = require('xml2json');
+                        var result = parser.toJson(body);
+                        result = JSON.parse(result);
+                        callback(null, result);
                     });
                 };
                 DataSetTransport.END = 'end';

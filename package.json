@@ -6,10 +6,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "node",
+    "singapore",
+    "government",
+    "environment",
+    "weather",
+    "pollution",
+    "typescript"
+  ],
   "author": "Peter Andreas Moelgaard <admin@petermolgard.com> (http://petermolgaard.com/)",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^3.10.1",
     "request": "^2.65.0",
-    "xml2js": "^0.4.13"
+    "xml2json": "^0.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmoelgaard/sg-gov-nea.git"
   }
 }
