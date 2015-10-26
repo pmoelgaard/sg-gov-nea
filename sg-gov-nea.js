@@ -59,7 +59,7 @@ var sg;
                                         readings: {}
                                     };
                                     _.each(region.record.reading, function (reading) {
-                                        _.set(result.readings, reading.type, parseFloat(reading.value));
+                                        _.set(result.readings, reading.type.toLowerCase(), parseFloat(reading.value));
                                     });
                                     return result;
                                 });
