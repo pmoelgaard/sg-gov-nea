@@ -8,10 +8,15 @@
 ## Background
 This is an attempt to make an easy to use NodeJS implementation for the Singaporean Government API which converts the XML they use to more JavaScript friendly JSON, the only other alternative found was [sghaze](https://www.npmjs.com/package/node-sghaze), however since it's not listed with a repository, I prefer not to use it. Furthermore, it is aligned towards only the PSI DataSet where the ambition here is to embrace the complete set of feeds from the NEA.
 
+---
+
+## Todo / Disclaimer
+
+Currently the library only has support for a single dataset (PSI Update), however next the remaining dataset will be added, they just need a basic parser function for each to transform the response before sending it down the event chain.
 
 ---
 
-### Sample Usage
+## Sample Usage
 
 ##### Code
 
