@@ -1,7 +1,7 @@
 {
   "name": "sg-gov-nea",
   "version": "0.0.4",
-  "description": "API to access the Singaporean Governement National Environment Agency's Dataset",
+  "description": "API to access the Singaporean Government National Environment Agency's Dataset",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
