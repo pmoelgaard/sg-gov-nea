@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Peter Andreas Moelgaard <admin@petermolgard.com> (http://petermolgaard.com/)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.65.0",
+    "xml2js": "^0.4.13"
+  }
 }
