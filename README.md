@@ -1,12 +1,13 @@
 # SG-GOV-NEA
-## API to access the Singaporean Governement National Environment Agency's Dataset
+## NodeJS Library to access the Singaporean Government National Environment Agency's Dataset Web API
 
 *This library is still HIGHLY EXPERIMENTAL, use are your own discretion, the author takes no responsibility.*
 
 ---
 
 ## Background
-This is an attempt to make an easy to use NodeJS implementation for the Singaporean Government API, the only other alternative found was [sghaze](https://www.npmjs.com/package/node-sghaze), however since it's not listed with a repository, I prefer not to use it. Furthermore, it is aligned towards only the PSI DataSet where the ambition here is to embrace the complete set of feeds from the NEA.
+This is an attempt to make an easy to use NodeJS implementation for the Singaporean Government API which converts the XML they use to more JavaScript friendly JSON, the only other alternative found was [sghaze](https://www.npmjs.com/package/node-sghaze), however since it's not listed with a repository, I prefer not to use it. Furthermore, it is aligned towards only the PSI DataSet where the ambition here is to embrace the complete set of feeds from the NEA.
+
 
 ---
 
