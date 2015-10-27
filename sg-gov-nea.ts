@@ -113,8 +113,8 @@ export module sg.gov.nea {
 
         }
 
-        static PSI_UPDATE:string = 'psi_update'
-        static NOWCAST:string = 'nowcast'
+        static PSI_UPDATE:string = 'psi_update';
+        static NOWCAST:string = 'nowcast';
     }
 
     export class DataSetTransport {
